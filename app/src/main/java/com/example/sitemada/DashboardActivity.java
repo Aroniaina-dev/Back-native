@@ -2,6 +2,8 @@ package com.example.sitemada;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -9,6 +11,12 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        // Ajoutez ici le code spécifique à l'activité du tableau de bord (DashboardActivity)
+
+        Login fragLogin = new Login();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragLogin);
+        fragmentTransaction.commit();
     }
 }

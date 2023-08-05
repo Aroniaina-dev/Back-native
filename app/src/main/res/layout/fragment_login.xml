@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragLog"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email :"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:translationX="30dp"
+        android:translationY="300dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mot de passe :"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:translationX="30dp"
+        android:translationY="350dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="235dp"
+        android:src="@drawable/head"
+        android:translationX="0px" />
+
+    <EditText
+        android:id="@+id/txtlogin"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:translationX="180dp"
+        android:translationY="290dp" />
+
+    <EditText
+        android:id="@+id/txtpass"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:translationX="180dp"
+        android:translationY="350dp" />
+
+    <Button
+        android:id="@+id/Connex"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="61dp"
+        android:text="Connexion"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:translationX="150dp"
+        android:translationY="400dp"
+        app:iconTint="#FF9800"
+        app:rippleColor="#FF5722"
+        app:strokeColor="#FFC107" />
+
+</RelativeLayout>
