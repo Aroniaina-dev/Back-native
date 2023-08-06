@@ -14,13 +14,26 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".RegisterActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".EditAgenceActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".SplashActivity"
             android:exported="false">
@@ -42,6 +55,33 @@
                 android:value="" />
         </activity>
         <activity android:name=".HomeActivity" />
+        <activity
+            android:name=".PublicationFragment"
+            android:label="PublicationFragmentActivity"
+            android:parentActivityName=".HomeActivity">
+
+            <!-- Définissez PublicationFragment comme contenu de l'activité -->
+            <meta-data
+                android:name="android:name"
+                android:value="com.example.sitemada.PublicationFragment" />
+            <meta-data
+                android:name="android:theme"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".NotificationsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

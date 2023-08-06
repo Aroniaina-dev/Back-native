@@ -23,6 +23,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,70 +36,73 @@ public class LoginActivity extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.btnLogin);
         progressBar = findViewById(R.id.progressBar);
 
-//        noAccount.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-//            }
-//        });
-
-
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-//                if (TextUtils.isEmpty(inputEmail.getText().toString()) || TextUtils.isEmpty(inputPassword.getText().toString())){
-//                    progressBar.setVisibility(view.VISIBLE);
-//                    String messageRequired = "Veuillez remplir tous les champs.";
-//                    Toast.makeText(LoginActivity.this,messageRequired, Toast.LENGTH_SHORT).show();
-//                }else{
-//                    progressBar.setVisibility(View.VISIBLE);
-//                    LoginRequest loginRequest = new LoginRequest();
-//                    //inputEmail.getText().toString() inputPassword.getText().toString(),
-//                    loginRequest.setEmail("nomenandrianinaantonio@gmail.com");
-//                    loginRequest.setPassword("1234");
-//
-//                    loginUtilisateur(loginRequest);
-//                }
+                String email = inputEmail.getText().toString().trim();
+                String password = inputPassword.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+                    Toast.makeText(LoginActivity.this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    LoginRequest loginRequest = new LoginRequest();
+                    loginRequest.setEmail(email);
+                    loginRequest.setPassword(password);
+                    loginUtilisateur(loginRequest);
+                }
+            }
+        });
+
+        noAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
     }
 
-//    public void loginUtilisateur(LoginRequest loginRequest){
-//        Call<LoginReponse> loginReponseCall = ApiClient.getService().loginUtilisateur(loginRequest);
-//
-//        loginReponseCall.enqueue(new Callback<LoginReponse>() {
-//            @Override
-//            public void onResponse(Call<LoginReponse> call, Response<LoginReponse> response) {
-//                if(response.isSuccessful()){
-//                    LoginReponse loginReponse = response.body();
-//
-//                    //Stockage des informations de l'utilisateur
-//                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    Gson gson = new Gson();
-//                    String loginResponseJson = gson.toJson(loginReponse);
-//
-//                    editor.putString("login_response", loginResponseJson);
-//                    editor.apply();
-//
-//                    startActivity(new Intent(LoginActivity.this,HomeActivity.class).putExtra("data", loginReponse));
-//                    finish();
-//                    progressBar.setVisibility(View.INVISIBLE);
-//                }else{
-//                    progressBar.setVisibility(View.INVISIBLE);
-//                    String messageErreur = "Un erreur s'est produit, veuillez réessayer plus tard!";
-//                    Toast.makeText(LoginActivity.this, messageErreur, Toast.LENGTH_LONG).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<LoginReponse> call, Throwable t) {
-//                progressBar.setVisibility(View.INVISIBLE);
-//                String messageFailure = t.getLocalizedMessage();
-//                Toast.makeText(LoginActivity.this, messageFailure, Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
+    public void loginUtilisateur(LoginRequest loginRequest) {
+        ApiService apiService = ApiClient.getService();
+
+        Call<LoginResponse> loginResponseCall = apiService.login(loginRequest);
+
+        loginResponseCall.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                progressBar.setVisibility(View.INVISIBLE);
+                if (response.isSuccessful()) {
+                    System.out.println("Ty mother fuck ah: ");
+                    System.out.println(response);
+                    LoginResponse loginResponse = response.body();
+
+//                    if (loginResponse != null) {
+                        // Enregistrez les informations de l'utilisateur dans les préférences partagées ici
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        Gson gson = new Gson();
+                        String loginResponseJson = gson.toJson(loginResponse);
+                        editor.putString("login_response", loginResponseJson);
+                        editor.apply();
+
+                        // Naviguer vers la HomeActivity
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finish();
+//                    } else {
+//                        Toast.makeText(LoginActivity.this, "Réponse de connexion invalide", Toast.LENGTH_SHORT).show();
+//                    }
+                } else {
+                    System.out.println("Ty mother fuck ah: ");
+                    System.out.println(response);
+                    Toast.makeText(LoginActivity.this, "Erreur de connexion, Fuck eeee", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                progressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(LoginActivity.this, "Erreur de connexion: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

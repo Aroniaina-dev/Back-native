@@ -1,9 +1,9 @@
 package com.example.sitemada;
 // ApiService.java
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -14,23 +14,23 @@ public interface ApiService {
     @GET("/generate")
     Call<List<AgenceModel>> generateData();
 
-    @GET("/{id}")
-    Call<AgenceModel> getById(@Path("id") String id);
+    @GET("{id}")
+    Call<AgenceModel> getAgenceById(@Path("id") String id);
 
     @GET("find/findAll")
     Call<List<AgenceModel>> getAllAgence();
 
     @POST("login/inscription")
-    Call<List<AgenceModel>> signup();
+    Call<RegisterResponse> register(@Body RegisterRequest registerRequest);
 
     @POST("login/seConnecter")
-    Call<List<AgenceModel>> login();
+    Call<LoginResponse> login(@Body LoginRequest loginRequest);
 
-    @PUT("login/mofidAgence")
-    Call<List<AgenceModel>> mofidAgence();
+    @PUT("mofidAgence")
+    Call<AgenceModel> updateAgence(@Body AgenceModel agence);
 
     @DELETE("delete/{id}")
-    Call<List<AgenceModel>> deleteAgence();
+    Call<List<AgenceModel>> deleteAgence(@Path("id")String agenceId);
 
     @GET("/{agenceId}/publication/{publicationId}")
     Call<AgenceModel> getPublicationById(@Path("agenceId") String agenceId,@Path("publicationId") String publicationId);
