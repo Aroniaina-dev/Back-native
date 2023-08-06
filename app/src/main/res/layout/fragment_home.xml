@@ -57,21 +57,21 @@
         android:translationY="160dp"
         app:iconTint="#A14444" />
 
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="182dp"
-        android:layout_height="70dp"
-        android:text="Gallerie"
-        android:translationX="15dp"
-        android:translationY="220dp" />
+<!--    <Button-->
+<!--        android:id="@+id/button6"-->
+<!--        android:layout_width="182dp"-->
+<!--        android:layout_height="70dp"-->
+<!--        android:text="Gallerie"-->
+<!--        android:translationX="15dp"-->
+<!--        android:translationY="220dp" />-->
 
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="181dp"
-        android:layout_height="70dp"
-        android:text="Devis"
-        android:translationX="205dp"
-        android:translationY="220dp" />
+<!--    <Button-->
+<!--        android:id="@+id/button7"-->
+<!--        android:layout_width="181dp"-->
+<!--        android:layout_height="70dp"-->
+<!--        android:text="Devis"-->
+<!--        android:translationX="205dp"-->
+<!--        android:translationY="220dp" />-->
 
     <Button
         android:id="@+id/button8"

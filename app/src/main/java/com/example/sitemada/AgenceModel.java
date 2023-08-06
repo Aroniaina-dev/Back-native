@@ -19,6 +19,14 @@ public class AgenceModel implements Parcelable {
     public AgenceModel() {
     }
 
+    public AgenceModel(String designation, String email, String password, String contact, String descriptionAgence) {
+        this.designation = designation;
+        this.email = email;
+        this.password = password;
+        this.contact = contact;
+        this.descriptionAgence = descriptionAgence;
+    }
+
     // Ajoutez le constructeur qui prend un Parcel en entrée pour la désérialisation
     protected AgenceModel(Parcel in) {
         _id = in.readString();

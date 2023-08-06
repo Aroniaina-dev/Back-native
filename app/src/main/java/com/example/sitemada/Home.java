@@ -4,12 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +40,7 @@ public class Home extends Fragment {
     private Button agence;
     private Button Desti;
     private Button Gal;
+
 
 
     public Home() {
@@ -57,8 +68,10 @@ public class Home extends Fragment {
     public View.OnClickListener agenceListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            System.out.println("Fuck ohhhh");
-            startActivity(new Intent(getActivity(), DashboardActivity.class));
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainer, new AgenceListFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
     };
     public View.OnClickListener gallListener = new View.OnClickListener() {
@@ -92,9 +105,11 @@ public class Home extends Fragment {
         agence.setOnClickListener(agenceListener);
         Desti = (Button) rootView.findViewById(R.id.button5);
         Desti.setOnClickListener(destiListener);
-        Gal = (Button) rootView.findViewById(R.id.button6);
-        Gal.setOnClickListener(gallListener);
+//        Gal = (Button) rootView.findViewById(R.id.button6);
+//        Gal.setOnClickListener(gallListener);
 
         return rootView;
     }
+
+
 }

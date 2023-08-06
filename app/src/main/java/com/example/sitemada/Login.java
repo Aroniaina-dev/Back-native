@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -26,6 +27,7 @@ public class Login extends Fragment {
     private EditText inputPassword;
     private Button btnLogin;
     private ProgressBar progressBar;
+    private TextView linkCreerCompte;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +40,18 @@ public class Login extends Fragment {
         inputPassword.setText("fuck");
         btnLogin.setOnClickListener(ConnexListener);
 
+        linkCreerCompte = rootView.findViewById(R.id.linkCreerCompte);
+        linkCreerCompte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Redirection vers le fragment RegisterFragment
+                RegisterFragment registerFragment = new RegisterFragment();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer, registerFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
         return rootView;
     }
 
@@ -71,9 +85,6 @@ public class Login extends Fragment {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
-                    System.out.println("Test de fuck");
-                    System.out.println(response.body());
-                    System.out.println(loginResponse);
                     if (loginResponse != null) {
                         // Enregistrez les informations de l'utilisateur dans les préférences partagées ici
                         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -100,7 +111,7 @@ public class Login extends Fragment {
                         Toast.makeText(getActivity(), "Erreur de connexion", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Erreur de connexion", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Erreur d'authentification", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,8 +92,25 @@ public class AuthDetailsActivity extends Fragment {
                 btnModifier.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String newDesignation = editDesignation.getText().toString();
+                        String newEmail = editEmail.getText().toString();
+                        String newContact = editContact.getText().toString();
+                        String newDescription = editDescription.getText().toString();
+                        agenceModel.setDesignation(newDesignation);
+                        agenceModel.setDescriptionAgence(newDescription);
+                        agenceModel.setContact(newContact);
+                        agenceModel.setEmail(newEmail);
+                        saveAgenceDetails(agenceModel);
+                        Toast.makeText(getActivity(), "Donnée modifier!", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-                        Toast.makeText(getActivity(), "Bouton Modifier cliqué !", Toast.LENGTH_SHORT).show();
+                Button btnSupprimer = rootView.findViewById(R.id.btnSupprimer);
+                btnSupprimer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteAgence(agenceModel.get_id());
+                        Toast.makeText(getActivity(), "Compte supprimer", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -124,6 +143,26 @@ public class AuthDetailsActivity extends Fragment {
             @Override
             public void onFailure(Call<AgenceModel> call, Throwable t) {
                 Toast.makeText(getActivity(), "Erreur lors de la modification de l'agence: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void deleteAgence(String agenceId) {
+        Call<List<AgenceModel>> call = ApiClient.getService().deleteAgence(agenceId);
+        call.enqueue(new Callback<List<AgenceModel>>() {
+            @Override
+            public void onResponse(Call<List<AgenceModel>> call, Response<List<AgenceModel>> response) {
+                if (response.isSuccessful()) {
+                    // La suppression a réussi, vous pouvez effectuer des actions supplémentaires ici
+                    Toast.makeText(getActivity(), "Agence supprimée avec succès", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Échec de la suppression de l'agence", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<AgenceModel>> call, Throwable t) {
+                Toast.makeText(getActivity(), "Erreur lors de la suppression de l'agence: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
