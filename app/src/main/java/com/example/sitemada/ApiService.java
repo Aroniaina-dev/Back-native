@@ -17,8 +17,14 @@ public interface ApiService {
     @GET("{id}")
     Call<AgenceModel> getAgenceById(@Path("id") String id);
 
-    @GET("find/findAll")
+    @GET("api/agence/")
     Call<List<AgenceModel>> getAllAgence();
+
+    @GET("api/desti/search/{titre}")
+    Call<List<DestinationModel>> search(@Path("titre") String titre);
+
+    @GET("api/desti/")
+    Call<List<DestinationModel>> getAllDesti();
 
     @POST("login/inscription")
     Call<RegisterResponse> register(@Body RegisterRequest registerRequest);

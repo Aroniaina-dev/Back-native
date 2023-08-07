@@ -20,7 +20,7 @@ public class ApiClient {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://192.168.254.183:3000/api/agence/")
+                .baseUrl("http://sidina.osc-fr1.scalingo.io/")
                 .client(okHttpClient)
                 .build();
 

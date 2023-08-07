@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class NotificationsActivity extends AppCompatActivity {
 
+    DestiList a;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_gallerie);
+        a=new DestiList();
+        setContentView(R.layout.fragment_desti_list);
     }
 }

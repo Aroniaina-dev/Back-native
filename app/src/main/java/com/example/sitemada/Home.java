@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -41,21 +43,14 @@ public class Home extends Fragment {
     private Button Desti;
     private Button Gal;
 
-
+    private RecyclerView recyclerView;
+    private DestiAdapter destiAdapter;
+    private List<DestinationModel> desti = new ArrayList<>();
+    private DestiList lista;
 
     public Home() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Home.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Home newInstance(String param1, String param2) {
         Home fragment = new Home();
         Bundle args = new Bundle();
@@ -77,14 +72,19 @@ public class Home extends Fragment {
     public View.OnClickListener gallListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            System.out.println("Fuck ohhhh 2");
-            startActivity(new Intent(getActivity(), NotificationsActivity.class));
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainer, new DestiList());
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
     };
     public View.OnClickListener destiListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            startActivity(new Intent(getActivity(), Destination.class));
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainer, new DestiList());
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
     };
 
@@ -107,6 +107,57 @@ public class Home extends Fragment {
         Desti.setOnClickListener(destiListener);
 //        Gal = (Button) rootView.findViewById(R.id.button6);
 //        Gal.setOnClickListener(gallListener);
+
+        SearchView searchView = rootView.findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ApiService apiService = ApiClient.getService();
+
+                Call<List<DestinationModel>> call = apiService.search(query);
+                lista = new DestiList();
+                call.enqueue(new Callback<List<DestinationModel>>() {
+                    @Override
+                    public void onResponse(Call<List<DestinationModel>> call, Response<List<DestinationModel>> response) {
+                        if (response.isSuccessful()) {
+                            List<DestinationModel> DestiFromApi = response.body();
+
+                            if (DestiFromApi != null) {
+                                desti.clear();
+                                desti.addAll(DestiFromApi);
+
+                                destiAdapter = new DestiAdapter(desti, new DestiList.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(DestinationModel destination) {
+                                        lista.navigateToDestiDetails(destination);
+                                    }
+                                });
+
+                                lista.recyclerView.setAdapter(destiAdapter);
+                                lista.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            } else {
+                                Toast.makeText(getActivity(), "Aucune agence trouvée.", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Erreur lors de la récupération des agences", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<DestinationModel>> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Erreur de connexion: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Code à exécuter lorsque le texte de recherche change
+                // Vous pouvez utiliser newText pour effectuer une recherche en temps réel
+                return false;
+            }
+        });
 
         return rootView;
     }

@@ -13,10 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sitemada.databinding.ActivityHomeBinding;
 
@@ -37,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         navigation = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(navigation.getRoot());
+
         agenceList = new ArrayList<>();
         publicationFragments = new ArrayList<>();
 //        getTest();
