@@ -46,7 +46,8 @@ public class Home extends Fragment {
     private RecyclerView recyclerView;
     private DestiAdapter destiAdapter;
     private List<DestinationModel> desti = new ArrayList<>();
-    private DestiList lista;
+    RecyclerView resu;
+    private Resultat lista;
 
     public Home() {
         // Required empty public constructor
@@ -105,6 +106,7 @@ public class Home extends Fragment {
         agence.setOnClickListener(agenceListener);
         Desti = (Button) rootView.findViewById(R.id.button5);
         Desti.setOnClickListener(destiListener);
+        resu= rootView.findViewById(R.id.repa);
 //        Gal = (Button) rootView.findViewById(R.id.button6);
 //        Gal.setOnClickListener(gallListener);
 
@@ -115,7 +117,7 @@ public class Home extends Fragment {
                 ApiService apiService = ApiClient.getService();
 
                 Call<List<DestinationModel>> call = apiService.search(query);
-                lista = new DestiList();
+                lista = new Resultat();
                 call.enqueue(new Callback<List<DestinationModel>>() {
                     @Override
                     public void onResponse(Call<List<DestinationModel>> call, Response<List<DestinationModel>> response) {
@@ -129,12 +131,11 @@ public class Home extends Fragment {
                                 destiAdapter = new DestiAdapter(desti, new DestiList.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(DestinationModel destination) {
-                                        lista.navigateToDestiDetails(destination);
+                                        navigateToDestiDetails(destination);
                                     }
                                 });
-
-                                lista.recyclerView.setAdapter(destiAdapter);
-                                lista.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                                resu.setAdapter(destiAdapter);
+                                resu.setLayoutManager(new LinearLayoutManager(getActivity()));
                             } else {
                                 Toast.makeText(getActivity(), "Aucune agence trouvée.", Toast.LENGTH_SHORT).show();
                             }
@@ -148,6 +149,7 @@ public class Home extends Fragment {
                         Toast.makeText(getActivity(), "Erreur de connexion: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
                 return false;
             }
 
@@ -158,9 +160,15 @@ public class Home extends Fragment {
                 return false;
             }
         });
-
         return rootView;
-    }
 
+    }
+    public void navigateToDestiDetails(DestinationModel destination) {
+        DestiDetails detailsFragment = DestiDetails.newInstance(destination);
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, detailsFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 }

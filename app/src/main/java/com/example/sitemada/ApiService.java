@@ -29,7 +29,7 @@ public interface ApiService {
     @POST("login/inscription")
     Call<RegisterResponse> register(@Body RegisterRequest registerRequest);
 
-    @POST("login/seConnecter")
+    @POST("api/agence/login")
     Call<LoginResponse> login(@Body LoginRequest loginRequest);
 
     @PUT("mofidAgence")

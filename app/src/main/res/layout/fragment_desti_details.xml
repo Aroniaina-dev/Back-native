@@ -17,9 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
-        android:translationX="100dp"
+        android:translationX="60dp"
         android:translationY="190dp" />
 
     <TextView
@@ -27,17 +27,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:translationX="10dp"
-        android:translationY="230dp" />
+        android:translationY="250dp" />
 
     <TextView
         android:id="@+id/textDescri"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:translationX="10dp"
-        android:translationY="270dp" />
+        android:translationY="320dp" />
 
 </FrameLayout>
